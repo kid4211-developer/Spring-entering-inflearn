@@ -4,15 +4,21 @@ import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @Transactional
+ * -> 스프링은 해당 클래스의 메서드를 실행할 때 트랜잭션을 시작하고, 메서드가 정상 종료되면 트랜잭션을 커밋한다. (만약 런타임 예외가 발생하면 롤백한다)
+ * -> JPA롤 통한 모든 데이터 변경은 트랜잭션 안에서 실행해야 한다.
+ */
+@Transactional
 public class MemberService {
     /**
      * MemberService 가 직접 MemberRepository 객체를 생성하게 되면 인스턴스가 서로 달라지게 된다.
-     * - 왜냐하면 MemberService 객체를 만들어 호출하고 별도로 내부에서 MemberRepository
-     *
+     * - 그러므로 MemberRepository 객체를 주입 받아야 한다.
      */
     private final MemberRepository memberRepository;
 
